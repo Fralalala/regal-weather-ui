@@ -4,11 +4,33 @@
     min-width: 128px;
     font-family: 'Roboto', sans-serif;
     text-align: center;
-    justify-content: center;
     font-size: 25px;
     flex-direction: column;
     padding: 10px;
     background: #ffffff2b;
     color: #2c2c2ced;
+    position: relative;
+    height: 150px;
+    gap: 3px;
 }
 
+.temperature {
+    font-size: 15px;
+    color: gray;
+}
+
+.weather-icon {
+    position: absolute;
+    top: 40px;
+    left: 0;
+}
+
+.celsius {
+    color: #303030;
+    cursor: pointer;
+}
+
+.farenheight {
+    color: #6a6a6a;
+    cursor: pointer;
+}

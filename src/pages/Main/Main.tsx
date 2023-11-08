@@ -15,7 +15,11 @@ const Main = () => {
           ))}
         </div>
 
-        <div id="description-column">description</div>
+        <div id="description-column">
+          
+
+
+        </div>
       </div>
     </div>
   );
