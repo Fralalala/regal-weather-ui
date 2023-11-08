@@ -1,8 +1,19 @@
 import React from 'react'
+import "./Main.css"
 
 const Main = () => {
   return (
-    <div>Main</div>
+    <div id='main' >
+        <div className='column-wrapper' >
+            <div id="tile-column" >
+                tiles
+            </div>
+
+            <div id="description-column" >
+                description
+            </div>
+        </div>
+    </div>
   )
 }
 
