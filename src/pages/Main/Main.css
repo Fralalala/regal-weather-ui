@@ -27,7 +27,34 @@
 }
 
 #description-column {
-    background-color: brown;
     height: 40%;
     padding: 10px;
+    width: 100%;
+    border: 1px solid #9ec2ff54;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    font-family: 'Roboto', sans-serif;
+}
+
+.description {
+    font-size: 100px;
+    font-family: 'Roboto', sans-serif;
+    color: #303030;
+    position: relative;
+    height: fit-content;
+    margin: auto 0;
+}
+
+.description-temperature {
+    font-size: 20px;
+    position: absolute;
+    top: 20px;
+    right: 0;
+}
+
+.location {
+    font-size: 20px;
+    
 }

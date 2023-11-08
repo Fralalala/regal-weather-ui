@@ -34,3 +34,7 @@
     color: #6a6a6a;
     cursor: pointer;
 }
+
+.description-weather-icon {
+    width: 200px;
+}
