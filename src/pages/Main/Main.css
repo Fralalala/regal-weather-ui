@@ -1,22 +1,33 @@
 .column-wrapper {
     display: flex;
-    flex-direction: row;
-    width: 46vw;
+    flex-direction: column;
+    width: 40%;
     margin: auto;
-    padding-bottom: 20px;
+    height: 70%;
+    gap: 10px;
 }
 
 #main {
     height: 100vh;
+    width: 100%;
+    margin: auto;
     display: flex;
     justify-content: center;
     align-items: center;
+    background: #A7CFDF;
+    background: linear-gradient(to right, #A7CFDF 0%, #23538A 100%);
 }
 
 #tile-column {
-    flex: 2;
+    gap: 10px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    overflow: scroll;
 }
 
 #description-column {
-    flex: 3 
+    background-color: brown;
+    height: 40%;
+    padding: 10px;
 }

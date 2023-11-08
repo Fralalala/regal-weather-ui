@@ -1,4 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 * {
   box-sizing: border-box;  
   margin: 0;
+}
+
+.divider {
+  width: 80%;
+  height: 4px;
+  background-color: rgba(128, 128, 128, 0.788);
+  border-radius: 3px;
+  margin: 0 auto;
 }
