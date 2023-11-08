@@ -2,23 +2,26 @@ import React from "react";
 import "./Tile.css";
 
 interface Props {
-  label: string;
+  dayName: string;
+  celsius?: string;
+  farenheit?: string;
 }
 
-const Tile = ({ label }: Props) => {
+const Tile = ({ dayName, celsius, farenheit }: Props) => {
   return (
     <div className="tile">
-      <span>{label}</span>
+      <span>{dayName}</span>
       <div className="divider" />
 
       <div className="temperature">
         <span className="celsius">
-          34<small>°C</small>{" "}
+          {celsius}
+          <small>°C</small>
         </span>
-        <span style={{ color: "black" }}>|</span>
+        <span style={{ color: "black" }}>{" | "}</span>
         <span className="farenheit">
-          {" "}
-          90<small>°F</small>{" "}
+          {farenheit}
+          <small>°F</small>
         </span>
       </div>
 
