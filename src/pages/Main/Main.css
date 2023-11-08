@@ -51,10 +51,32 @@
 
 .location {
     font-size: 20px;
+    font-family: 'Roboto', sans-serif;
+    background: #ffffff68;
+    width: fit-content;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    color: #545454;
 }
 
 .farenheit-sm {
     font-size: 25px;
     color: #545454;
+}
 
+.weather-text {
+    font-size: 18px;
+}
+
+.weather-date {
+    font-size: 18px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: #545454;
+    border: 1px solid #ffffff70;
+    padding: 4px;
+    background-color: #ffffff68;
+    border-radius: 5px;
 }
