@@ -23,7 +23,8 @@
     display: flex;
     flex-direction: row;
     width: 100%;
-    overflow: scroll;
+    overflow-x: scroll;
+    overflow-y:hidden;
 }
 
 #description-column {
@@ -36,6 +37,7 @@
     display: flex;
     flex-direction: row;
     font-family: 'Roboto', sans-serif;
+    position: relative;
 }
 
 .description {
@@ -47,14 +49,12 @@
     margin: auto 0;
 }
 
-.description-temperature {
-    font-size: 20px;
-    position: absolute;
-    top: 20px;
-    right: 0;
-}
-
 .location {
     font-size: 20px;
-    
+}
+
+.farenheit-sm {
+    font-size: 25px;
+    color: #545454;
+
 }

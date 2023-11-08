@@ -1,5 +1,4 @@
-import Tile from './components/Tile/Tile';
-import Main from './pages/Main/Main';
+import Main from "./pages/Main/Main";
 
 function App() {
   return (

@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./Main.css";
 import Tile from "../../components/Tile/Tile";
+import Switch from "react-switch";
 
 const Main = () => {
   const [weather, setWeather] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isCelsius, setIsCelsius] = useState(true);
+
+  const toggleUnit = () => {
+    setIsCelsius((prevState) => !prevState);
+  };
 
   return (
     <div id="main">
@@ -22,26 +27,9 @@ const Main = () => {
             src="https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/tornado.svg"
           />
           <div className="description">
-            <div>
-              34°
-              <div className="description-temperature">
-                °
-                <span
-                  className="celsius"
-                  style={{ textDecoration: isCelsius ? "underline" : "" }}
-                >
-                  C
-                </span>
-                <span style={{ color: "black" }}>|</span>°
-                <span
-                  className="farenheight"
-                  style={{ textDecoration: !isCelsius ? "underline" : "" }}
-                >
-                  F
-                </span>
-              </div>
-              <div className="location">Philippines, Metro Manila</div>
-            </div>
+            <span>34°</span>
+            <small className="farenheit-sm" >94°</small>
+            <div className="location">Philippines, Metro Manila</div>
           </div>
         </div>
       </div>

@@ -27,12 +27,10 @@
 
 .celsius {
     color: #303030;
-    cursor: pointer;
 }
 
-.farenheight {
+.farenheit {
     color: #6a6a6a;
-    cursor: pointer;
 }
 
 .description-weather-icon {
