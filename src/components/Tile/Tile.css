@@ -1,7 +1,7 @@
 .tile {
     display: flex;
     border-radius: 15px;
-    min-width: 128px;
+    min-width: 122px;
     font-family: 'Roboto', sans-serif;
     text-align: center;
     font-size: 25px;
@@ -14,6 +14,7 @@
     gap: 3px;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     margin-bottom: 10px;
+    cursor: pointer;
 }
 
 .temperature {
@@ -37,4 +38,8 @@
 
 .description-weather-icon {
     width: 200px;
+}
+
+.selected {
+    border: 2px solid #5eff5e96;
 }

@@ -1,9 +1,27 @@
 import "./Tile.css";
 import { Weather } from "../../pages/Main/Main";
+import { motion } from "framer-motion";
 
-const Tile = ({ dayName, celsius, farenheit, iconPhrase }: Weather) => {
+interface Props extends Weather {
+  isSelected: boolean;
+  onClick: React.MouseEventHandler<HTMLDivElement> | undefined;
+}
+
+const Tile = ({
+  dayName,
+  celsius,
+  farenheit,
+  iconPhrase,
+  isSelected,
+  onClick,
+}: Props) => {
   return (
-    <div className="tile">
+    <motion.div
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.9 }}
+      className={`tile ${isSelected && "selected"}`}
+      onClick={onClick}
+    >
       <span>{dayName}</span>
       <div className="divider" />
 
@@ -20,7 +38,7 @@ const Tile = ({ dayName, celsius, farenheit, iconPhrase }: Weather) => {
       </div>
 
       <img className="weather-icon" src={iconPhrase} />
-    </div>
+    </motion.div>
   );
 };
 

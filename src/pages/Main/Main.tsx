@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import "./Main.css";
 import Tile from "../../components/Tile/Tile";
 import axios from "axios";
@@ -66,6 +66,15 @@ const Main = () => {
     setSelectedWeather(newWeather[0]);
   };
 
+  // const setActiveWeather = (newActiveWeather: Weather) => {
+  //   setSelectedWeather(newActiveWeather)
+  // }
+
+  const setActiveWeather = useCallback(
+    (weatherData: Weather) => {},
+    [setSelectedWeather]
+  );
+
   useEffect(() => {
     getWeatherData();
   }, []);
@@ -75,7 +84,13 @@ const Main = () => {
       <div className="column-wrapper">
         <div id="tile-column">
           {weather.map((weatherData) => (
-            <Tile {...weatherData} />
+            <Tile
+              onClick={() => {
+                setSelectedWeather(weatherData);
+              }}
+              isSelected={selectedWeather?.date === weatherData.date}
+              {...weatherData}
+            />
           ))}
         </div>
 
@@ -86,10 +101,10 @@ const Main = () => {
           />
           <div className="description">
             <span>{selectedWeather?.celsius}°</span>
-            <small className="farenheit-sm">{selectedWeather?.farenheit}°</small>
-            <div className="weather-text">
-              {selectedWeather?.description}
-            </div>
+            <small className="farenheit-sm">
+              {selectedWeather?.farenheit}°
+            </small>
+            <div className="weather-text">{selectedWeather?.description}</div>
           </div>
           <div className="weather-date">{selectedWeather?.date}</div>
         </div>
