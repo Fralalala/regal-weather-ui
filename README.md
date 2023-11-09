@@ -24,3 +24,9 @@ After navigating to your preferred folder, copy down the commands step by step b
 
 1. How can I input my own AccuWeather API?
     - The application contains a built in feature that accepts an API Key from AccuWeather. If an invalid key is inputted, a default key is used so that regardless if successful or not, it will show data.
+  
+2. Which libraries are used to aid in Development?
+    - Moment.js
+    - Axios
+    - Framer Motion
+    - React-Toastify
