@@ -3,8 +3,9 @@ import "./Main.css";
 import Tile from "../../components/Tile/Tile";
 import axios from "axios";
 import moment from "moment";
+import { getWeatherIcon } from "../../constants/getWeatherIcon";
 
-interface Weather {
+export interface Weather {
   dayName: string;
   celsius: string;
   farenheit: string;
@@ -15,6 +16,9 @@ interface Weather {
 
 const Main = () => {
   const [weather, setWeather] = useState<Weather[]>([]);
+  const [selectedWeather, setSelectedWeather] = useState<Weather | undefined>(
+    undefined
+  );
 
   const farenheitToCelsius = (farenheit: number) => {
     return Math.floor(((farenheit - 32) * 5) / 9);
@@ -35,11 +39,11 @@ const Main = () => {
       const date = moment(forecast.Date);
       const dailyWeather: Weather = {
         dayName: date.format("ddd"),
-        date: date.format("MM-DD"),
+        date: date.format("MMMM DD"),
         description: forecast.Day.LongPhrase,
         celsius: "",
         farenheit: "",
-        iconPhrase: forecast.Day.LongPhrase,
+        iconPhrase: getWeatherIcon(forecast.Day.IconPhrase.toLowerCase()),
       };
 
       let value: number = forecast.RealFeelTemperature.Maximum.Value;
@@ -59,6 +63,7 @@ const Main = () => {
     });
 
     setWeather(newWeather);
+    setSelectedWeather(newWeather[0]);
   };
 
   useEffect(() => {
@@ -77,16 +82,16 @@ const Main = () => {
         <div id="description-column">
           <img
             className="description-weather-icon"
-            src="https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/tornado.svg"
+            src={selectedWeather?.iconPhrase}
           />
           <div className="description">
-            <span>34°</span>
-            <small className="farenheit-sm">94°</small>
+            <span>{selectedWeather?.celsius}°</span>
+            <small className="farenheit-sm">{selectedWeather?.farenheit}°</small>
             <div className="weather-text">
-              Some short text about this more words words owrds owsa oasdasoda{" "}
+              {selectedWeather?.description}
             </div>
           </div>
-          <div className="weather-date">November 8</div>
+          <div className="weather-date">{selectedWeather?.date}</div>
         </div>
         <div className="location">Philippines, Metro Manila</div>
       </div>

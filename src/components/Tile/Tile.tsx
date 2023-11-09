@@ -1,13 +1,7 @@
-import React from "react";
 import "./Tile.css";
+import { Weather } from "../../pages/Main/Main";
 
-interface Props {
-  dayName: string;
-  celsius?: string;
-  farenheit?: string;
-}
-
-const Tile = ({ dayName, celsius, farenheit }: Props) => {
+const Tile = ({ dayName, celsius, farenheit, iconPhrase }: Weather) => {
   return (
     <div className="tile">
       <span>{dayName}</span>
@@ -25,10 +19,7 @@ const Tile = ({ dayName, celsius, farenheit }: Props) => {
         </span>
       </div>
 
-      <img
-        className="weather-icon"
-        src="https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/tornado.svg"
-      />
+      <img className="weather-icon" src={iconPhrase} />
     </div>
   );
 };
