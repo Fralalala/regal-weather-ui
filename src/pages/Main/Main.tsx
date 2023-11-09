@@ -4,6 +4,12 @@ import Tile from "../../components/Tile/Tile";
 import axios from "axios";
 import moment from "moment";
 import { getWeatherIcon } from "../../constants/getWeatherIcon";
+import { toast } from "react-toastify";
+import {
+  celsiusToFarenheit,
+  farenheitToCelsius,
+} from "../../helper/helperTemperature";
+import { debounce } from "../../helper/debounce";
 
 export interface Weather {
   dayName: string;
@@ -15,101 +21,118 @@ export interface Weather {
 }
 
 const Main = () => {
+  const [inputToken, setInputToken] = useState("");
   const [weather, setWeather] = useState<Weather[]>([]);
   const [selectedWeather, setSelectedWeather] = useState<Weather | undefined>(
     undefined
   );
 
-  const farenheitToCelsius = (farenheit: number) => {
-    return Math.floor(((farenheit - 32) * 5) / 9);
-  };
+  const getWeatherData = async (
+    apiKey: string = "Ix3CHbqwB7qBGCehl4ZAeaexFRfZmHs8",
+    showSuccess = false
+  ) => {
+    console.log("asjidniausd");
+    try {
+      const res = await axios.get(
+        `http://dataservice.accuweather.com/forecasts/v1/daily/5day/264885?apikey=${apiKey}&details=true`
+      );
 
-  const celsiusToFarenheit = (celsius: number) => {
-    return Math.floor(celsius * (9 / 5) + 32);
-  };
+      const newWeather: Weather[] = [];
 
-  const getWeatherData = async () => {
-    const res = await axios.get(
-      "http://dataservice.accuweather.com/forecasts/v1/daily/5day/264885?apikey=Ix3CHbqwB7qBGCehl4ZAeaexFRfZmHs8&details=true"
-    );
+      res.data.DailyForecasts.forEach((forecast: any) => {
+        const date = moment(forecast.Date);
+        const dailyWeather: Weather = {
+          dayName: date.format("ddd"),
+          date: date.format("MMMM DD"),
+          description: forecast.Day.LongPhrase,
+          celsius: "",
+          farenheit: "",
+          iconPhrase: getWeatherIcon(forecast.Day.IconPhrase.toLowerCase()),
+        };
 
-    const newWeather: Weather[] = [];
+        let value: number = forecast.RealFeelTemperature.Maximum.Value;
+        value += forecast.RealFeelTemperature.Minimum.Value;
 
-    res.data.DailyForecasts.forEach((forecast: any) => {
-      const date = moment(forecast.Date);
-      const dailyWeather: Weather = {
-        dayName: date.format("ddd"),
-        date: date.format("MMMM DD"),
-        description: forecast.Day.LongPhrase,
-        celsius: "",
-        farenheit: "",
-        iconPhrase: getWeatherIcon(forecast.Day.IconPhrase.toLowerCase()),
-      };
+        value /= 2;
 
-      let value: number = forecast.RealFeelTemperature.Maximum.Value;
-      value += forecast.RealFeelTemperature.Minimum.Value;
+        if (forecast.RealFeelTemperature.Maximum.Unit === "F") {
+          dailyWeather.farenheit = value.toString();
+          dailyWeather.celsius = farenheitToCelsius(value).toString();
+        } else {
+          dailyWeather.celsius = value.toString();
+          dailyWeather.farenheit = celsiusToFarenheit(value).toString();
+        }
 
-      value /= 2;
+        newWeather.push(dailyWeather);
+      });
 
-      if (forecast.RealFeelTemperature.Maximum.Unit === "F") {
-        dailyWeather.farenheit = value.toString();
-        dailyWeather.celsius = farenheitToCelsius(value).toString();
-      } else {
-        dailyWeather.celsius = value.toString();
-        dailyWeather.farenheit = celsiusToFarenheit(value).toString();
+      setWeather(newWeather);
+      setSelectedWeather(newWeather[0]);
+
+      if (showSuccess) toast("Successfulty fetched data.");
+    } catch (error) {
+      if (apiKey !== "Ix3CHbqwB7qBGCehl4ZAeaexFRfZmHs8") {
+        toast("User inputed API key invalid. Using default key.");
+        getWeatherData();
       }
-
-      newWeather.push(dailyWeather);
-    });
-
-    setWeather(newWeather);
-    setSelectedWeather(newWeather[0]);
+    }
   };
 
-  // const setActiveWeather = (newActiveWeather: Weather) => {
-  //   setSelectedWeather(newActiveWeather)
-  // }
-
-  const setActiveWeather = useCallback(
-    (weatherData: Weather) => {},
-    [setSelectedWeather]
+  const debouncedGetWeather = useCallback(
+    debounce((newInputToken: string, showSuccess: boolean = false) => {
+      getWeatherData(
+        newInputToken || undefined,
+        newInputToken === "" ? false : showSuccess
+      );
+    }, 200),
+    []
   );
 
   useEffect(() => {
-    getWeatherData();
-  }, []);
+    debouncedGetWeather(inputToken, true);
+  }, [inputToken]);
 
   return (
     <div id="main">
-      <div className="column-wrapper">
-        <div id="tile-column">
-          {weather.map((weatherData) => (
-            <Tile
-              onClick={() => {
-                setSelectedWeather(weatherData);
-              }}
-              isSelected={selectedWeather?.date === weatherData.date}
-              {...weatherData}
-            />
-          ))}
-        </div>
-
-        <div id="description-column">
-          <img
-            className="description-weather-icon"
-            src={selectedWeather?.iconPhrase}
-          />
-          <div className="description">
-            <span>{selectedWeather?.celsius}°</span>
-            <small className="farenheit-sm">
-              {selectedWeather?.farenheit}°
-            </small>
-            <div className="weather-text">{selectedWeather?.description}</div>
+      {selectedWeather && (
+        <div className="column-wrapper">
+          <div id="tile-column">
+            {weather.map((weatherData) => (
+              <Tile
+                onClick={() => {
+                  setSelectedWeather(weatherData);
+                }}
+                isSelected={selectedWeather?.date === weatherData.date}
+                {...weatherData}
+                key={weatherData.date}
+              />
+            ))}
           </div>
-          <div className="weather-date">{selectedWeather?.date}</div>
+
+          <div id="description-column">
+            <img
+              className="description-weather-icon"
+              src={selectedWeather?.iconPhrase}
+            />
+            <div className="description">
+              <span>{selectedWeather?.celsius}°</span>
+              <small className="farenheit-sm">
+                {selectedWeather?.farenheit}°
+              </small>
+              <div className="weather-text">{selectedWeather?.description}</div>
+            </div>
+            <div className="weather-date">{selectedWeather?.date}</div>
+          </div>
+          <div className="location">Philippines, Metro Manila</div>
+          <input
+            value={inputToken}
+            onChange={(event) => {
+              setInputToken(event.target.value);
+            }}
+            className="input"
+          />
         </div>
-        <div className="location">Philippines, Metro Manila</div>
-      </div>
+      )}
     </div>
   );
 };
