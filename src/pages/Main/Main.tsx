@@ -12,6 +12,7 @@ import {
 import { debounce } from "../../helper/debounce";
 import { motion } from "framer-motion";
 
+// We export this as this will be used from other components
 export interface Weather {
   dayName: string;
   celsius: string;
@@ -28,11 +29,11 @@ const Main = () => {
     undefined
   );
 
+  // Default value is my (the developer of this app) personal AccuWeather API Key.
   const getWeatherData = async (
     apiKey: string = "Ix3CHbqwB7qBGCehl4ZAeaexFRfZmHs8",
     showSuccess = false
   ) => {
-    console.log("asjidniausd");
     try {
       const res = await axios.get(
         `https://dataservice.accuweather.com/forecasts/v1/daily/5day/264885?apikey=${apiKey}&details=true`
@@ -42,6 +43,8 @@ const Main = () => {
 
       res.data.DailyForecasts.forEach((forecast: any) => {
         const date = moment(forecast.Date);
+
+        // Intialize Weather Object values
         const dailyWeather: Weather = {
           dayName: date.format("ddd"),
           date: date.format("MMMM DD"),
@@ -51,11 +54,14 @@ const Main = () => {
           iconPhrase: getWeatherIcon(forecast.Day.IconPhrase.toLowerCase()),
         };
 
+
+        // Calculate Temperature Value
         let value: number = forecast.RealFeelTemperature.Maximum.Value;
         value += forecast.RealFeelTemperature.Minimum.Value;
 
         value /= 2;
 
+        // AccuWeather does not contain both values for both units so we always have to check and convert accordingly
         if (forecast.RealFeelTemperature.Maximum.Unit === "F") {
           dailyWeather.farenheit = value.toString();
           dailyWeather.celsius = farenheitToCelsius(value).toString();
