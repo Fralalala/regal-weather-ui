@@ -10,6 +10,7 @@ import {
   farenheitToCelsius,
 } from "../../helper/helperTemperature";
 import { debounce } from "../../helper/debounce";
+import { motion } from "framer-motion";
 
 export interface Weather {
   dayName: string;
@@ -95,7 +96,12 @@ const Main = () => {
   return (
     <div id="main">
       {selectedWeather && (
-        <div className="column-wrapper">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          className="column-wrapper"
+        >
           <div id="tile-column">
             {weather.map((weatherData) => (
               <Tile
@@ -109,7 +115,13 @@ const Main = () => {
             ))}
           </div>
 
-          <div id="description-column">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+            id="description-column"
+            key={selectedWeather.dayName}
+          >
             <img
               className="description-weather-icon"
               src={selectedWeather?.iconPhrase}
@@ -122,16 +134,18 @@ const Main = () => {
               <div className="weather-text">{selectedWeather?.description}</div>
             </div>
             <div className="weather-date">{selectedWeather?.date}</div>
-          </div>
+          </motion.div>
           <div className="location">Philippines, Metro Manila</div>
+
           <input
             value={inputToken}
             onChange={(event) => {
               setInputToken(event.target.value);
             }}
             className="input"
+            placeholder="Inser API Key Here"
           />
-        </div>
+        </motion.div>
       )}
     </div>
   );
