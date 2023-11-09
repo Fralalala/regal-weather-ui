@@ -93,3 +93,7 @@
   box-sizing: border-box;
   color: #545454;
 }
+
+.description-weather-icon {
+    width: 200px;
+}
