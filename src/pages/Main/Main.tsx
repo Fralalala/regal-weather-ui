@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import "./Main.css";
 import Tile from "../../components/Tile/Tile";
-import Switch from "react-switch";
 import axios from "axios";
 import moment from "moment";
 
@@ -16,12 +15,6 @@ interface Weather {
 
 const Main = () => {
   const [weather, setWeather] = useState<Weather[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isCelsius, setIsCelsius] = useState(true);
-
-  const toggleUnit = () => {
-    setIsCelsius((prevState) => !prevState);
-  };
 
   const farenheitToCelsius = (farenheit: number) => {
     return Math.floor(((farenheit - 32) * 5) / 9);
@@ -46,7 +39,7 @@ const Main = () => {
         description: forecast.Day.LongPhrase,
         celsius: "",
         farenheit: "",
-        iconPhrase: "",
+        iconPhrase: forecast.Day.LongPhrase,
       };
 
       let value: number = forecast.RealFeelTemperature.Maximum.Value;
