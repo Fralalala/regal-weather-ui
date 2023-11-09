@@ -73,7 +73,7 @@ const Main = () => {
       if (showSuccess) toast("Successfulty fetched data.");
     } catch (error) {
       if (apiKey !== "Ix3CHbqwB7qBGCehl4ZAeaexFRfZmHs8") {
-        toast("User inputed API key invalid. Using default key.");
+        toast("API key is invalid. Using default key.");
         getWeatherData();
       }
     }
