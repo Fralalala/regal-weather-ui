@@ -8,6 +8,15 @@ Open a terminal and navigate to any folder where you would like to download the 
 
 After navigating to your preferred folder, copy down the commands step by step below in the terminal where you navigated through your preferred folder.
 
+### Required CLI
+Here's a list of CLI and technologies needed before running the commands on the next step.
+
+1. GIT CLI - For downloading the code base
+2. Node - Tested on Version v20.8.0
+3. npm - Tested on Version 10.1.0
+
+### Terminal Commands to Execute
+
 1. ```git clone https://github.com/Fralalala/regal-weather-ui.git```
 
     The `git clone` command copies the code base to the folder you are in.
