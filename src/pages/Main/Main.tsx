@@ -35,7 +35,7 @@ const Main = () => {
     console.log("asjidniausd");
     try {
       const res = await axios.get(
-        `http://dataservice.accuweather.com/forecasts/v1/daily/5day/264885?apikey=${apiKey}&details=true`
+        `https://dataservice.accuweather.com/forecasts/v1/daily/5day/264885?apikey=${apiKey}&details=true`
       );
 
       const newWeather: Weather[] = [];
